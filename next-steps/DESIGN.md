@@ -12,7 +12,7 @@
 | D3 | 中断按钮 | 不做 |
 | D4 | 一行放不下 | 换行,不设「更多」 |
 | D6 | 名称与版本 | 保持 `next-steps`,版本 1.0.0 → 1.1.0 |
-| D7 | 持久安装途径 | 插件目录自带 `marketplace.json`(第六节) |
+| D7 | 持久安装途径 | fork 根市场改名为 `xuxu-community`,从 GitHub 分支安装(第六节) |
 | D9 | 建议的排列 | 由竖排改为横排,按宽度换行 |
 | D11 | 按钮分三类 | 推断建议、目标模板、固定常用语;模板与固定常用语分为 `templates`、`phrases` 两个配置项 |
 | D12 | 显示时机 | 与原版一致:一轮结束后才显示,下一轮开始、按 0、按下任一按钮时整栏隐藏 |
@@ -118,14 +118,16 @@ next:  1: 告知技术栈：PostgreSQL 后端  2: 告知技术栈：静态博客
 ## 六、安装
 
 ```bash
-claude plugin marketplace add ./next-steps
-claude plugin install next-steps@xuxu-next-steps
+claude plugin marketplace add 'xuxu777xu/claude-plugins-community#feat/phrase-bar' --sparse .claude-plugin next-steps
+claude plugin install next-steps@xuxu-community
 claude plugin disable next-steps@claude-community
 ```
 
-- fork 根目录的市场名为 `claude-community`,与本机已注册的官方市场同名,不能原样注册(实测);因此在插件目录下放 `marketplace.json`,以插件目录本身为市场根(条目 `source: "./"`),不改 upstream 文件。
-- 本地路径注册的市场就地加载,改代码后 `/reload-plugins` 即生效(实测,`claude plugin list` 显示 `Read from: /Users/apple/xuxu/Common_Expressions/next-steps`)。
-- 开发期可用 `claude --plugin-dir ./next-steps`;该方式的配置键为 `next-steps@inline`,与安装后的 `next-steps@xuxu-next-steps` 分开保存(实测,mods/reference 文档)。
+- fork 根市场原名 `claude-community`,与本机已注册的官方社区市场同名,不能原样注册(实测);改名为 `xuxu-community`。代价:同步 upstream 时 `marketplace.json` 首行可能冲突。
+- 改名后该市场不再按官方市场对待,`claude plugin validate` 对其中 132 个以 `claude-` 等开头的第三方插件名报错;注册与安装 next-steps 不受影响(实测,隔离配置目录下 `marketplace add` 与 `install next-steps@xuxu-community` 均成功)。
+- `#feat/phrase-bar` 固定分支,不需要把改动合入 fork 的 main;`--sparse` 只检出市场文件与本插件。
+- 安装的是缓存副本,版本由 `plugin.json` 的 `version` 固定;推送新改动后需先升版本,再 `claude plugin marketplace update xuxu-community` 与 `claude plugin update next-steps@xuxu-community`。
+- 本地试改用 `claude --plugin-dir ./next-steps`;该方式的配置键为 `next-steps@inline`,与安装后的 `next-steps@xuxu-community` 分开保存(实测,mods/reference 文档)。
 
 ## 七、测试
 

@@ -62,15 +62,24 @@ The band draws in the terminal and in the desktop app.
 
 ## Install
 
-This folder is its own marketplace:
+This version lives on the `feat/phrase-bar` branch of the fork `xuxu777xu/claude-plugins-community`, whose marketplace is named `xuxu-community`:
 
 ```bash
-claude plugin marketplace add ./next-steps
-claude plugin install next-steps@xuxu-next-steps
+claude plugin marketplace add 'xuxu777xu/claude-plugins-community#feat/phrase-bar' --sparse .claude-plugin next-steps
+claude plugin install next-steps@xuxu-community
 claude plugin disable next-steps@claude-community
 ```
 
-The last line turns off the upstream next-steps, if it is installed, so the suggestions do not draw twice. Run `/reload-plugins` in an open session to load the change.
+`--sparse` checks out only the marketplace file and this plugin. The last line turns off the upstream next-steps, if it is installed, so the suggestions do not draw twice. Run `/reload-plugins` in an open session to load the change.
+
+To take a later push, raise `version` in `.claude-plugin/plugin.json` first, then run:
+
+```bash
+claude plugin marketplace update xuxu-community
+claude plugin update next-steps@xuxu-community
+```
+
+To try local edits without pushing, run `claude --plugin-dir ./next-steps`.
 
 ## Tests
 
