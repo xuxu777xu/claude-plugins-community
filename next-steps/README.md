@@ -62,10 +62,10 @@ The band draws in the terminal and in the desktop app.
 
 ## Install
 
-This version lives on the `feat/phrase-bar` branch of the fork `xuxu777xu/claude-plugins-community`, whose marketplace is named `xuxu-community`:
+This version lives on the `main` branch of the fork `xuxu777xu/claude-plugins-community`, whose marketplace is named `xuxu-community`:
 
 ```bash
-claude plugin marketplace add 'xuxu777xu/claude-plugins-community#feat/phrase-bar' --sparse .claude-plugin next-steps
+claude plugin marketplace add xuxu777xu/claude-plugins-community --sparse .claude-plugin next-steps
 claude plugin install next-steps@xuxu-community
 claude plugin disable next-steps@claude-community
 ```

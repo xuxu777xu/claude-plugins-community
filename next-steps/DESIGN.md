@@ -1,6 +1,6 @@
 # next-steps 常用语栏设计说明
 
-状态:已实现并安装,版本 1.1.0。分支 `feat/phrase-bar`,基线为 upstream `f60f045` 中的 next-steps 1.0.0。
+状态:已实现并安装,版本 1.1.0。位于 fork 的 `main` 分支,基线为 upstream `f60f045` 中的 next-steps 1.0.0。
 
 依据标记:「实测」= 本会话读过的文件或运行过的命令;「推断」= 由实测材料推出、未运行验证;「未验证」= 尚无证据。类型定义指 Claude Code 2.1.295 生成的 `.claude-plugin/types/claude-code/index.d.ts`(在交互会话中以 `--plugin-dir` 加载本插件时生成,已被该目录的 `.gitignore` 排除)。
 
@@ -118,14 +118,14 @@ next:  1: 告知技术栈：PostgreSQL 后端  2: 告知技术栈：静态博客
 ## 六、安装
 
 ```bash
-claude plugin marketplace add 'xuxu777xu/claude-plugins-community#feat/phrase-bar' --sparse .claude-plugin next-steps
+claude plugin marketplace add xuxu777xu/claude-plugins-community --sparse .claude-plugin next-steps
 claude plugin install next-steps@xuxu-community
 claude plugin disable next-steps@claude-community
 ```
 
 - fork 根市场原名 `claude-community`,与本机已注册的官方社区市场同名,不能原样注册(实测);改名为 `xuxu-community`。代价:同步 upstream 时 `marketplace.json` 首行可能冲突。
 - 改名后该市场不再按官方市场对待,`claude plugin validate` 对其中 132 个以 `claude-` 等开头的第三方插件名报错;注册与安装 next-steps 不受影响(实测,隔离配置目录下 `marketplace add` 与 `install next-steps@xuxu-community` 均成功)。
-- `#feat/phrase-bar` 固定分支,不需要把改动合入 fork 的 main;`--sparse` 只检出市场文件与本插件。
+- 安装取 fork 的默认分支 `main`;`--sparse` 只检出市场文件与本插件。
 - 安装的是缓存副本,版本由 `plugin.json` 的 `version` 固定;推送新改动后需先升版本,再 `claude plugin marketplace update xuxu-community` 与 `claude plugin update next-steps@xuxu-community`。
 - 本地试改用 `claude --plugin-dir ./next-steps`;该方式的配置键为 `next-steps@inline`,与安装后的 `next-steps@xuxu-community` 分开保存(实测,mods/reference 文档)。
 
